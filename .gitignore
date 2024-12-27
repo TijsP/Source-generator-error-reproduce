@@ -47,6 +47,9 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+# Keep cs project file located in child projects
+!*/*.csproj
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
