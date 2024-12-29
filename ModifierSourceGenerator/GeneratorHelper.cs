@@ -22,7 +22,7 @@ namespace ModifierSourceGenerator
         public const string RecalculateModifiersAuthoringSourceText = @"
 using System;
 
-namespace ModifiersSourceGenerator
+namespace ModifierSourceGenerator
 {
     internal class RecalculateModifiersAuthoring : global::UnityEngine.MonoBehaviour
     {
@@ -30,9 +30,9 @@ namespace ModifiersSourceGenerator
         {
             public override void Bake(RecalculateModifiersAuthoring authoring)
             {
-                global::Unity.Entities.Entity entity = global::Unity.Entities.GetEntity(global::Unity.Entities.TransformUsageFlags.None);
-                global::Unity.Entities.AddComponent<RecalculateModifiers>(entity);
-                global::Unity.Entities.SetComponentEnabled<RecalculateModifiers>(entity, true);
+                var entity = GetEntity(global::Unity.Entities.TransformUsageFlags.None);
+                AddComponent<RecalculateModifiers>(entity);
+                SetComponentEnabled<RecalculateModifiers>(entity, true);
             }
         }
     }
