@@ -15,7 +15,7 @@ namespace ModifierSourceGenerator
         public const string RecalculateModifiersEnableableComponentSourceText = @"
 namespace ModifierSourceGenerator
 {
-    internal struct RecalculateModifiers : global::Unity.Entities.IEnableableComponent { }
+    internal struct RecalculateModifiers : global::Unity.Entities.IComponentData, global::Unity.Entities.IEnableableComponent { }
 }
 ";
 
