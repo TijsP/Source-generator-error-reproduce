@@ -2,7 +2,10 @@
 {
     internal static class GeneratorHelper
     {
+        public const string ModifierAttributeSourcePath = @"Temp/GeneratedCode/ModifierSourceGenerator";
         public const string ModifierAttributeSourceText = @"
+#line 1 ""Temp/GeneratedCode/ModifierSourceGenerator""
+#pragma warning disable 0219
 namespace ModifierSourceGenerator
 {
     [System.AttributeUsage(System.AttributeTargets.Struct)]
@@ -13,6 +16,7 @@ namespace ModifierSourceGenerator
 ";
 
         public const string RecalculateModifiersEnableableComponentSourceText = @"
+#line 1 ""Temp/GeneratedCode/ModifierSourceGenerator""
 namespace ModifierSourceGenerator
 {
     internal struct RecalculateModifiers : global::Unity.Entities.IComponentData, global::Unity.Entities.IEnableableComponent { }
@@ -20,6 +24,7 @@ namespace ModifierSourceGenerator
 ";
 
         public const string RecalculateModifiersAuthoringSourceText = @"
+#line 1 ""Temp/GeneratedCode/ModifierSourceGenerator""
 using System;
 
 namespace ModifierSourceGenerator

@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+using System.IO;
 using System.Text;
 
 namespace ModifierSourceGenerator
@@ -11,9 +12,11 @@ namespace ModifierSourceGenerator
         {
             context.RegisterPostInitializationOutput(ctx => {
                 ctx.AddSource("ModifiableStatsAttribute.g.cs", SourceText.From(GeneratorHelper.ModifierAttributeSourceText, Encoding.UTF8));
-                ctx.AddSource("RecalculateModifiers.g.cs", SourceText.From(GeneratorHelper.RecalculateModifiersEnableableComponentSourceText, Encoding.UTF8));
-                ctx.AddSource("RecalculateModifiersAuthoring.g.cs", SourceText.From(GeneratorHelper.RecalculateModifiersAuthoringSourceText, Encoding.UTF8));
+                //ctx.AddSource("RecalculateModifiers.g.cs", SourceText.From(GeneratorHelper.RecalculateModifiersEnableableComponentSourceText, Encoding.UTF8));
+                //ctx.AddSource("RecalculateModifiersAuthoring.g.cs", SourceText.From(GeneratorHelper.RecalculateModifiersAuthoringSourceText, Encoding.UTF8));
             });
+
+            File.WriteAllText(GeneratorHelper.ModifierAttributeSourcePath, SourceText.From(GeneratorHelper.ModifierAttributeSourceText, Encoding.UTF8).ToString());
         }
     }
 }

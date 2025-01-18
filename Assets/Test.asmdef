@@ -1,11 +1,12 @@
 {
-    "name": "MyLibrary",
-    "rootNamespace": "ModifierSourceGenerator",
+    "name": "Test",
+    "rootNamespace": "",
     "references": [
         "Unity.Burst",
         "Unity.Collections",
         "Unity.Entities",
-        "Unity.Entities.Hybrid"
+        "Unity.Entities.Hybrid",
+        "MyLibrary"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
