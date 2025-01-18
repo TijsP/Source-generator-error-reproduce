@@ -16,7 +16,8 @@ namespace ModifierSourceGenerator
                 //ctx.AddSource("RecalculateModifiersAuthoring.g.cs", SourceText.From(GeneratorHelper.RecalculateModifiersAuthoringSourceText, Encoding.UTF8));
             });
 
-            File.WriteAllText(GeneratorHelper.ModifierAttributeSourcePath, SourceText.From(GeneratorHelper.ModifierAttributeSourceText, Encoding.UTF8).ToString());
+            Directory.CreateDirectory(GeneratorHelper.ModifierAttributeSourcePath);
+            File.WriteAllText(GeneratorHelper.ModifierAttributeSourcePath + "/ModifiableStatsAttribute.g.cs", SourceText.From(GeneratorHelper.ModifierAttributeSourceText, Encoding.UTF8).ToString());
         }
     }
 }

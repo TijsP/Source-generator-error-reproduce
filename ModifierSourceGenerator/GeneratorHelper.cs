@@ -3,13 +3,13 @@
     internal static class GeneratorHelper
     {
         public const string ModifierAttributeSourcePath = @"Temp/GeneratedCode/ModifierSourceGenerator";
-        public const string ModifierAttributeSourceText = @"
-#line 1 ""Temp/GeneratedCode/ModifierSourceGenerator""
+        public const string ModifierAttributeSourceText =
+@"#line 1 ""Temp/GeneratedCode/ModifierSourceGenerator/ModifiableStatsAttribute.g.cs""
 #pragma warning disable 0219
 namespace ModifierSourceGenerator
 {
     [System.AttributeUsage(System.AttributeTargets.Struct)]
-    internal class ModifiableStatsAttribute : System.Attribute
+    public class ModifiableStatsAttribute : System.Attribute
     {
     }
 }
