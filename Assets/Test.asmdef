@@ -2,11 +2,11 @@
     "name": "Test",
     "rootNamespace": "",
     "references": [
+        "MyLibrary",
         "Unity.Burst",
         "Unity.Collections",
         "Unity.Entities",
-        "Unity.Entities.Hybrid",
-        "MyLibrary"
+        "Unity.Entities.Hybrid"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
