@@ -26,7 +26,7 @@ namespace ModifierSourceGenerator
             StringBuilder sourceTextBuilder = new StringBuilder(@"
 namespace ModifierSourceGenerator {
     public class ModifierHelper{
-        public static string StructFound  = @"""); sourceTextBuilder.Append(source.ToString()); sourceTextBuilder.Append(@""";
+        public static string StructFound = @"""); sourceTextBuilder.Append(source.ToString()); sourceTextBuilder.Append(@""";
     }
 }");
 
