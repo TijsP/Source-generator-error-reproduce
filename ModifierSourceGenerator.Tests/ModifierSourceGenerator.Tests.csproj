@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Unity3D" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Remove="$(UnityEnginePath)" />
+    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Burst.dll" Private="false" />
+    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Collections.dll" Private="false" />
+    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Entities.dll" Private="false" />
+    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Entities.Hybrid.dll" Private="false" />
+    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\MOCSGenerators.dll" Private="false" />
+    <ProjectReference Include="$(ProjectDir)\..\ModifierSourceGenerator\ModifierSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>
