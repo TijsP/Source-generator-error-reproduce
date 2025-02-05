@@ -16,7 +16,7 @@
     <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Collections.dll" Private="false" />
     <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Entities.dll" Private="false" />
     <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\Unity.Entities.Hybrid.dll" Private="false" />
-    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\MOCSGenerators.dll" Private="false" />
+    <Reference Include="$(ProjectDir)\..\Library\ScriptAssemblies\MyLibrary.dll" Private="false" />
     <ProjectReference Include="$(ProjectDir)\..\ModifierSourceGenerator\ModifierSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

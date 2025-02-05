@@ -25,16 +25,27 @@ namespace ModifierSourceGenerator
         {
             StringBuilder sourceTextBuilder = new StringBuilder(@"
 namespace ModifierSourceGenerator {
-    public class ModifierHelper{
-        public static string StructFound = @"""); sourceTextBuilder.Append(source.ToString()); sourceTextBuilder.Append(@""";
+    public partial class ModifierHelper {
+        public static string StructFound_"); sourceTextBuilder.Append(source.Identifier.Text);
+            sourceTextBuilder.Append(@" = @"""); sourceTextBuilder.Append(source.ToString()); sourceTextBuilder.Append(@""";
     }
 }");
 
-            string sourceText = sourceTextBuilder.ToString();
-            context.AddSource("ModifiableStats.g.cs", sourceText);
+            string hintName = source.SyntaxTree.GetGeneratedSourceFileName("ModifierEnumGenerator", source, source.Identifier.Text);
+            sourceTextBuilder.AppendLine($"/* {hintName} */");
 
-            Directory.CreateDirectory("Temp/ModifierSourceGenerator/GeneratedCode");
-            File.WriteAllText("Temp/ModifierSourceGenerator/GeneratedCode/ModifiableStats.txt", sourceText);
+            string sourceText = sourceTextBuilder.ToString();
+            context.AddSource(hintName, sourceText);
+
+            string folderPath = Path.GetDirectoryName(source.SyntaxTree.FilePath);
+            folderPath = Path.Combine(folderPath, "Temp~/ModifierSourceGenerator/GeneratedCode");
+            folderPath = Path.GetFullPath(folderPath);
+
+            string filePath = Path.Combine(folderPath, $"ModifiableStats_{source.Identifier.Text}.txt");
+            filePath = Path.GetFullPath(filePath);
+
+            Directory.CreateDirectory(folderPath);
+            File.WriteAllText(filePath, sourceText);
         }
 
         public static bool IsSyntaxTargetForGeneration(SyntaxNode syntaxNode, CancellationToken cancellationToken)
@@ -64,9 +75,16 @@ namespace ModifierSourceGenerator {
                 }
             }
 
+            var folderPath = Path.GetDirectoryName(syntaxNode.SyntaxTree.FilePath);
+            folderPath = Path.Combine(folderPath, "Temp~/ModifierSourceGenerator/Logs");
+            folderPath = Path.GetFullPath(folderPath);
+
+            var filePath = Path.Combine(folderPath, $"StructFound__{structDeclarationSyntax.Identifier.Text}.txt");
+            filePath = Path.GetFullPath(filePath);
+
             //  output to file which structs have been found
-            Directory.CreateDirectory("Temp/ModifierSourceGenerator/Logs");
-            File.WriteAllText($"Temp/ModifierSourceGenerator/Logs/StructFound_{structDeclarationSyntax.Identifier}.txt", tracker);
+            Directory.CreateDirectory(folderPath);
+            File.WriteAllText(filePath, tracker);
 
             if (!hasIJobEntityIdentifier)
                 return false;
@@ -91,5 +109,62 @@ namespace ModifierSourceGenerator {
                 miscellaneousOptions:
                 SymbolDisplayMiscellaneousOptions.EscapeKeywordIdentifiers |
                 SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+    }
+
+    public static class SyntaxNodeExtensions
+    {
+        public static string GetGeneratedSourceFileName(this SyntaxTree syntaxTree, string generatorName, SyntaxNode node, string typeName)
+            => GetGeneratedSourceFileName(syntaxTree, generatorName, node.GetLineNumber(), typeName);
+
+        public static string GetGeneratedSourceFileName(this SyntaxTree syntaxTree, string generatorName, int salting, string typeName)
+        {
+            var (isSuccess, fileName) = TryGetFileNameWithoutExtension(syntaxTree);
+            var stableHashCode = syntaxTree.GetStableHashCode();
+
+            var postfix = generatorName.Length > 0 ? $"__{generatorName}" : string.Empty;
+
+            if (string.IsNullOrWhiteSpace(typeName) == false)
+            {
+                postfix = $"__{typeName}{postfix}";
+            }
+
+            if (isSuccess)
+                fileName = $"{fileName}{postfix}_{stableHashCode}_{salting}.g.cs";
+            else
+                fileName = Path.Combine($"{Path.GetRandomFileName()}{postfix}", ".g.cs");
+
+            return fileName;
+        }
+
+        public static int GetLineNumber(this SyntaxNode node)
+            => node.GetLocation().GetLineSpan().StartLinePosition.Line + 1;
+
+        public static int GetStableHashCode(this SyntaxTree syntaxTree)
+            => GetStableHashCode(syntaxTree.FilePath) & 0x7fffffff;
+
+        public static (bool IsSuccess, string FileName) TryGetFileNameWithoutExtension(this SyntaxTree syntaxTree)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(syntaxTree.FilePath);
+            return (IsSuccess: true, fileName);
+        }
+
+        public static int GetStableHashCode(string str)
+        {
+            unchecked
+            {
+                var hash1 = 5381;
+                var hash2 = hash1;
+
+                for (var i = 0; i < str.Length && str[i] != '\0'; i += 2)
+                {
+                    hash1 = ((hash1 << 5) + hash1) ^ str[i];
+                    if (i == str.Length - 1 || str[i + 1] == '\0')
+                        break;
+                    hash2 = ((hash2 << 5) + hash2) ^ str[i + 1];
+                }
+
+                return hash1 + (hash2 * 1566083941);
+            }
+        }
     }
 }

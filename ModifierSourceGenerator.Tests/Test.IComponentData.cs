@@ -7,4 +7,10 @@ namespace ModifierSourceGenerator.Tests
     {
         public int TestInt;
     }
+
+    [ModifierSourceGenerator.ModifiableStats]
+    public struct TestComponent2 : IComponentData
+    {
+        public float TestFloat;
+    }
 }
